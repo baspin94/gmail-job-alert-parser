@@ -48,9 +48,8 @@ def main():
       ids.append(message['id'])
     print(ids)
 
-    msg_results = service.users().messages().get(userId="me", id=ids[0], format="raw").execute()
-    # print(msg_results)
-    msg = msg_results["raw"]
+    msg_results = service.users().messages().get(userId="me", id=ids[0], format="full").execute()
+    msg = msg_results["payload"]["parts"][1]["body"]["data"]
     decoded_msg = base64.urlsafe_b64decode(msg)
     print(decoded_msg)
 
