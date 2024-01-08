@@ -1,5 +1,7 @@
 import os.path
 import base64
+from bs4 import BeautifulSoup
+import ipdb
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -51,7 +53,9 @@ def main():
     msg_results = service.users().messages().get(userId="me", id=ids[0], format="full").execute()
     msg = msg_results["payload"]["parts"][1]["body"]["data"]
     decoded_msg = base64.urlsafe_b64decode(msg)
-    print(decoded_msg)
+    
+    doc = BeautifulSoup(decoded_msg, 'html.parser')
+    ipdb.set_trace()
 
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.
